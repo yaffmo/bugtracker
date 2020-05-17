@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="col-xs-12 col-sm-12 col-md-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">問題回報</div>
+    <div class="panel-body">
+
+
+      <form *ngIf="form" [formGroup]="form" (ngSubmit)="formSubmit(form.value)">
+        <div class="profile">
+
+          <div class="form-group">
+            <label>使用者姓名</label>
+            <input type="text" class="form-control" id="username" formControlName="username" [ngModel]="displayname" value={{displayname}}>
+          </div>
+          <div class="form-group">
+            <label>使用裝置</label>
+            <input type="text" class="form-control" id="device" formControlName="device" placeholder="請輸入使用裝置">
+          </div>
+          <div class="form-group">
+            <label>作業系統</label>
+            <input type="system" class="form-control" id="system" formControlName="system" placeholder="請輸入使用作業系統"  >
+          </div>
+          <div class="form-group">
+            <label>問題描述(必填)</label>
+            <div class="col-xs-12">
+              <div>
+                <textarea style="width: 300px" class="form-control" id="description"  formControlName="description" rows="6"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>瀏覽器</label>
+            <input type="text" class="form-control" id="browser" formControlName="browser" (onbur)="detectUrl()" placeholder="請輸入使用瀏覽器">
+          </div>
+
+
+
+
+
+          <div [hidden]="form" class="form-group">
+            <!--<label>請輸入生日</label>-->
+            <input type="text" class="form-control" id="url" formControlName="url" value ={{url}} [ngModel]="url" >
+            
+          </div>
+          <label>上傳截圖(必填)</label>
+          <!--上傳截圖-->
+          <div class="panel panel-info ">
+
+
+            <label>
+       <input type="file" class="button" (change)="detectFiles($event)">
+    </label>
+
+            <button class="btn btn-warning" [disabled]="!selectedFiles" (click)="uploadSingle()">
+            上傳檔案</button>
+
+
+          </div>
+
+          <div *ngIf="currentUpload">
+            <progressbar [animate]="false" [value]="currentUpload?.progress" type="success"><b>{{currentUpload?.progress}}%</b></progressbar>
+          </div>
+<div *ngIf="uploadSuccess" >已上傳完成囉!請提交</div>
+
+        </div>
+        <button type="submit" class="btn btn-primary"  >提交</button>
+        <a class="btn btn-default" (click)="toggleform()" role="button">取消</a>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+
+

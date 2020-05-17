@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-6 ">
+    <form class="form-horizontal" role="form">
+      <fieldset>
+
+        <!-- Form Name -->
+        <div class="page-header ">
+          <h1>Project</h1>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="textinput">專案名稱</label>
+          <div class="col-sm-8">
+            <input type="text" #newproject placeholder="請輸入專案名稱" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="textinput">網址</label>
+          <div class="col-sm-8">
+            <input type="text" #newurl placeholder="請輸入網址" class="form-control">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="pull-right">
+              <a class="btn btn-default" routerLink="/home" role="button">Cancel</a>
+              <a class="btn btn-primary" (click)="addProject(newproject.value,newurl.value)" routerLink="/projectlists" role="button">Save</a>
+
+            </div>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

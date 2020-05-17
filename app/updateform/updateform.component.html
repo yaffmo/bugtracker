@@ -1,0 +1,101 @@
+<div  class="container ">
+  <div class="col-xs-12 col-sm-12 col-md-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">編輯{{updatekey}}</div>
+    <div class="panel-body">
+   <!--<button (click)="getitem()" >subscribe</button>-->
+      <form *ngIf="form" [formGroup]="form" (ngSubmit)="formSubmit(form.value)">
+        <div class="profile" >
+
+          <div class="form-group">
+            <label>使用者姓名</label>
+            <input type="text" class="form-control" id="username" formControlName="username" [ngModel]="item.username" value={{item.username}}>
+          </div>
+          <div class="form-group">
+            <label>使用裝置</label>
+            <input type="text" class="form-control" id="device" formControlName="device" [ngModel]="item.device" value={{item.device}}>
+          </div>
+          <div class="form-group">
+            <label>作業系統</label>
+            <input type="system" class="form-control" id="system" formControlName="system" [ngModel]="item.system" value={{item.system}}>
+          </div>
+
+          <div class="form-group">
+            <label>問題描述</label>
+            <div class="col-xs-12">
+              <div>
+                <textarea style="width: 300px" class="form-control" id="description" formControlName="description" [ngModel]="item.description"
+                  rows="6">{{item.description}}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>瀏覽器</label>
+            <input type="text" class="form-control" id="browser" formControlName="browser" [ngModel]="item.browser" value={{item.browser}}>
+          </div>
+
+         
+
+          <!--<div class="form-group">
+        <label>瀏覽器</label>
+        <textarea type="text" class="form-control" id="description" formControlName="description" placeholder="請描述問題">
+      </div>-->
+          <div [hidden]="form" class="form-group">
+
+            <input type="text" class="form-control" id="url" 
+            formControlName="url" value={{item.url}} [ngModel]="item.url"></div>
+
+          <div [hidden]="form" class="form-group">
+
+            <input type="text" class="form-control" id="date" 
+            formControlName="date" value={{item.date}} [ngModel]="item.date">
+          </div>
+          <div [hidden]="form" class="form-group">
+
+            <input type="text" class="form-control" id="state" 
+            formControlName="state" value={{item.state}} [ngModel]="item.state">
+
+          </div>
+
+
+
+          <div class="panel panel-info ">
+
+
+            <label>
+       <input type="file" class="button" (change)="detectFiles($event)">
+    </label>
+
+            <button class="btn btn-warning" [disabled]="!selectedFiles" (click)="uploadSingle()">
+            上傳檔案</button>
+
+
+          </div>
+
+         <div *ngIf="currentUpload">
+             <progressbar [animate]="false" [value]="progress" type="success"><b>{{progress}}%</b></progressbar> </div>
+            <!--<div class="progress">
+              
+              <div class="progress-bar progress-bar-animated" role="progressbar" attr.aria-valuenow="progress" 
+              attr.aria-valuemin="1" attr.aria-valuemax="100"
+                style="width: 100%;">
+               
+                {{progress}}%-->
+<!--             
+              </div>-->
+            <!--</div>-->
+         
+   <div *ngIf="currentUpload" >{{currentUpload.name}}已上傳完成囉!請提交</div>
+
+
+        </div>
+        <button type="submit" class="btn btn-primary"  (click)="uploadSingle()" >提交</button>
+        <a class="btn btn-default" (click)="toggleHidden()" role="button">取消</a>
+        <!--<a class="btn btn-default"(click)= "changeValue(false)" role="button">取消</a>-->
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!--<pre> {{ form.value | json }} </pre>-->

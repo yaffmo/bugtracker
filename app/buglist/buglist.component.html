@@ -1,0 +1,163 @@
+<div class="page-header">
+  <h1>{{projectname}}</h1>
+</div>
+
+<!--<button class="btn btn-primary" routerLink="new">新增</button>-->
+<!--<router-outlet> </router-outlet>-->
+<button class="btn btn-primary"  (click)="newFormModal.show()"  >新增</button>
+        <div class="modal fade" bsModal #newFormModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center">問題回報</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+      </div>
+      <div class="modal-body ">
+       <!--<app-updateform [updatekey]="updatekey" (validUpdated)="updateModal.hide()"   ></app-updateform>-->
+       <app-form (showalert)="add($event)"  (hideform)="newFormModal.hide()"  ></app-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+<!--<button (click)="alert()" >alert</button>-->
+  <!--<div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+  </div>-->
+
+<div *ngIf="isModalShown" [config]="{ show: true ,backdrop: false}" (onHidden)="onHidden()" bsModal #alertModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">資料送出</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <div>您的資料已成功送出囉</div>
+        <br>
+        <button (click)="hideModal()" class="btn btn-primary" >確認</button>
+      </div>
+    </div>
+  </div>
+</div>  
+
+
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="">#</th>
+      <th class="col-md-1">上傳時間</th>
+      <th class="col-md-2">使用者名稱</th>
+      <th class="col-md-2">測試環境</th>
+      <th class="col-md-3">問題描述</th>
+      <th class="col-md-1">截圖</th>
+      
+      
+      <!--<th>狀態</th>-->
+      <th class="col-md-1">管理</th>
+      <th class="col-md-2">處理狀態</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items | async ; let row_no = index">
+      <td>{{row_no + 1}}</td>
+      <td>{{item.date | date: 'yyyy/MM/dd hh:mm'}}</td>
+      <td>{{item.username}}</td>
+      <td>
+
+        <li>使用裝置：{{item.device}}</li>
+        <li>作業系統：{{item.system}}</li>
+        <li>瀏覽器：{{item.browser}}</li>
+
+      </td>
+      <td>{{item.description}}</td>
+
+
+      <td>
+        <a *ngIf="item.url" (click)="lgModal.show()" class="thumbnail">
+      <img [src]="item.url" [style.width.px]="width_sm" alt="...">
+    </a>
+        <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">截圖</h4>
+                <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+              </div>
+              <div class="modal-body text-center">
+                <img [src]="item.url" [style.width.px]="width_lg" alt="...">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      
+      <td>
+        <button class="btn btn-warning" (click)="updateModal.show()" (click)="updateItem(item.$key)">編輯</button>
+        <div class="modal fade" bsModal #updateModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-center">編輯</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+              </div>
+              <div class="modal-body ">
+                <app-updateform [updatekey]="updatekey" (validUpdated)="updateModal.hide()"></app-updateform>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-danger" (click)="staticModal.show()">刪除</button>
+
+
+        <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-center">溫馨小提醒</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+              </div>
+              <div class="modal-body text-center">
+                你確定要刪除整筆資料嗎?<br>
+                <br>
+                <button class="btn btn-danger" (click)="deleteItem(item.$key)">確認刪除</button>
+                <button class="btn btn-default " (click)="staticModal.hide()">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <!--處理狀態-->
+<td>
+        <div>
+          <input type="text" #state [value]="stateValue" (keyup.enter)="updateState(item.$key , state.value)" placeholder="處理狀態說明"/>
+          <a *ngIf="item.state"><br>{{item.state}}</a>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<button class="btn btn-default" (click)="goBack()">回專案列表</button>

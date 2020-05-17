@@ -1,0 +1,6 @@
+  <p class="navbar-text" *ngIf="displayname">登入為 {{displayname}}</p>
+  
+ <button *ngIf="!displayname" (click)="login()" class="btn btn-primary btn-default navbar-btn">登入</button>
+  <button (click)="logout()" class="btn btn-primary btn-default navbar-btn">登出</button>
+  
+

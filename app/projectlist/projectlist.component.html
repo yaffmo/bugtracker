@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h1>專案列表</h1>
+</div>
+<!--<input type="text" #newproject />
+<button (click)="addProject(newproject.value)">Add</button>
+<button (click)="deleteEverything()">Delete All</button>-->
+
+
+<table  class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>專案名稱</th>
+      <th>創建者</th>
+      <th>創建日期</th>
+      <th>網址</th>
+      <th>Manager</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of projects | async ; let row_no = index">
+      <td>{{row_no + 1}}</td>
+      <td><a [routerLink]="['/project', project.text]">{{project.text}}</a></td>
+      <td>{{project.creator}}</td>
+      <td>{{project.date | date: 'yyyy/MM/dd hh:mm'}}</td>
+      <td><a class="btn btn-default" target="_blank" [href]="project.siteurl">網站位置</a></td>
+      <td>
+        <!--<input type="text" #updatetext [value]="project.text" />
+        <button class="btn btn-warning" (click)="updateProject(project.$key, updatetext.value)">Update</button>-->
+        <button class="btn btn-info"  [routerLink]="['/project', project.text]">進入</button>
+        <!--<button class="btn btn-danger" (click)="deleteProject(project.$key)">刪除</button>-->
+        <button class="btn btn-danger" (click)="staticModal.show()" >刪除</button>
+       
+ 
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center">溫馨小提醒</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <!--<span aria-hidden="true">&times;</span>-->
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        你確定要刪除整個專案嗎?<br>
+        <br>
+        <button class="btn btn-danger" (click)="deleteProject(project.$key)">確認刪除</button>
+         <button class="btn btn-default " (click)="staticModal.hide()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        </td>
+    </tr>
+  </tbody>
+</table>
+
